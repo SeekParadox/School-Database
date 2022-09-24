@@ -17,9 +17,8 @@ public abstract class Person implements Comparable<Person> {
     protected String firstName;
     protected String lastName;
     private final Gender gender;
-
     private final static Set<String> ids = new HashSet<>();
-    private LocalDate dob;
+    private final LocalDate dob;
     private final String id;
 
     /**
@@ -152,9 +151,14 @@ public abstract class Person implements Comparable<Person> {
         return Objects.hash(firstName, lastName, gender, dob, id);
     }
 
+    /**
+     *
+     * @param o the object to be compared.
+     * @return the person in alphabetical order
+     */
     @Override
     public int compareTo(Person o) {
-        return 0;
+        return this.lastName.compareTo(o.lastName);
     }
 
     /**

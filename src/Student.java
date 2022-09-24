@@ -9,6 +9,13 @@ public class Student extends Person{
         super(firstName, lastName, dob,gender);
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 
     @Override
     public int compareTo(Person o) {

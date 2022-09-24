@@ -1,6 +1,6 @@
 package miniprojects.schooldb;
 
-import miniprojects.schooldb.Course.DBClass;
+import miniprojects.schooldb.Course.Clazz;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -9,21 +9,9 @@ import java.util.Arrays;
  */
 public class Instructor extends Employee {
     private Department department;
-    private DBClass aClass;
-    private final DBClass [] classes;
+    private Clazz aClass;
+    private final Clazz[] classes;
     private int size = 0;
-
-    /**
-     * a constructor
-     * @param firstName takes in the first name of the Instructor.
-     * @param lastName takes in the last name of the Instructor.
-     * @param dob takes in the Date of Birth of the Instructor.
-     * @param gender takes in the Gender of the Instructor.
-     */
-    Instructor(String firstName, String lastName, LocalDate dob, Gender gender) {
-        super(firstName, lastName, dob, gender);
-        classes = new DBClass[10];
-    }
 
     /**
      * a constructor
@@ -34,9 +22,12 @@ public class Instructor extends Employee {
      * @param department takes in the department of the Instructor.
      */
     public Instructor(String firstName, String lastName, LocalDate dob, Gender gender, Department department) {
-        this(firstName, lastName, dob , gender);
+        super(firstName, lastName, dob, gender);
+//        this(firstName, lastName, dob , gender);
         this.department = department;
-        department.addInstructor(this);
+        classes = new Clazz[10];
+        if(department != null) department.addInstructor(this);
+
         //this.courses = courses;
     }
 
@@ -44,7 +35,7 @@ public class Instructor extends Employee {
      * this method adds a class to this Instructors class array.
      * @param c takes in the Class to be added to the instructors taught classes.
      */
-    public void addClass(DBClass c) {
+    public void addClass(Clazz c) {
         if(!teachesClass(c) && size < classes.length) {
             classes[size++] = c;
             c.setInstructor(this);
@@ -65,9 +56,9 @@ public class Instructor extends Employee {
      *
      * @return returns an array of classes taught by this Instructor.
      */
-    public DBClass[] getClasses() {
+    public Clazz[] getClasses() {
         if(size == 0) throw new NullPointerException("Array is empty");
-        return Arrays.stream(classes).limit(size).toArray(DBClass[]::new);
+        return Arrays.stream(classes).limit(size).toArray(Clazz[]::new);
     }
 
     /**
@@ -76,7 +67,7 @@ public class Instructor extends Employee {
      * @return returns the class at the given index
      * @throws IndexOutOfBoundsException throws NullPointerException when the index is out of Bounds
      */
-    public DBClass getClassAtIndex(int index) {
+    public Clazz getClassAtIndex(int index) {
         if(index >= 0 && index < size)
             return classes[index];
         throw new IndexOutOfBoundsException(getFirstName() + " " + getLastName() + " does not teach this class.");
@@ -96,7 +87,7 @@ public class Instructor extends Employee {
      * @param e takes in the class.
      * @return returns a boolean value if whether the class is taught by this Instructor.
      */
-    public boolean teachesClass(DBClass e) {
+    public boolean teachesClass(Clazz e) {
         return size != 0 && Arrays.asList(classes).contains(e);
     }
 
